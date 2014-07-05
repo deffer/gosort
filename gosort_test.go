@@ -16,15 +16,7 @@ func (o Order) String() string {
 }
 
 func byNumber(one, two interface{}) int {
-	o1, ok := one.(Order)
-	if !ok {
-		panic("Oops")
-	}
-
-	o2, ok := two.(Order)
-	if !ok {
-		panic("Oops")
-	}
+	o1, o2 := one.(Order), two.(Order) // SPARTAAAAAA!!!!!!
 
 	if o1.number > o2.number {
 		return 1
@@ -42,7 +34,7 @@ func Test(t *testing.T) {
 		toSort[i] = Order{initial[i]}
 	}
 
-	sort(toSort, byNumber)
+	sorti(toSort, byNumber)
 
 	for i := range toSort {
 		if i > 0 {

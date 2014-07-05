@@ -1,7 +1,51 @@
 package main
 
-func sort(slice []interface{}, comparator func(one, two interface{}) int) {
+import (
+	"fmt"
+	"reflect"
+	"sort"
+)
+
+type StructsSorter struct {
+	originalSlice interface{}
+	comparator    func(one, two interface{}) int
+	l             int
+	v             reflect.Value
+	itemType      reflect.Type
+}
+
+func (s StructsSorter) getValueAt(i int) reflect.Value {
+	return s.v.Index(i)
+}
+
+func (s StructsSorter) Len() int {
+	return s.l
+}
+
+func (s StructsSorter) Swap(i, j int) {
+	fi := s.getValueAt(i)
+	fj := s.getValueAt(j)
+	tmp := reflect.New(s.itemType).Elem()
+	tmp.Set(fi)
+	fi.Set(fj)
+	fj.Set(tmp)
+
+	fmt.Printf("Swapping %d with %d", i, j)
+}
+func (s StructsSorter) Less(i, j int) bool {
+	return (s.comparator(s.getValueAt(i), s.getValueAt(j)) == -1)
+}
+
+func sorti(slice []interface{}, comparator func(one, two interface{}) int) {
 	quicksort(0, len(slice)-1, slice, comparator)
+}
+
+func sorts(slice interface{}, comparator func(one, two interface{}) int) {
+	sorter := StructsSorter{originalSlice: slice, comparator: comparator}
+	sorter.v = reflect.ValueOf(slice)
+	sorter.l = sorter.v.Len()
+	sorter.itemType = sorter.getValueAt(0).Type()
+	sort.Sort(sorter)
 }
 
 func quicksort(low int, high int, slice []interface{}, comparator func(one, two interface{}) int) {
