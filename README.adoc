@@ -1,0 +1,7 @@
+= Usage
+
+--------------------------------------
+SortStructs(orders, func(i, j int) bool {
+	return orders[i].number < orders[j].number
+})
+--------------------------------------

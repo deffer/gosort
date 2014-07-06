@@ -1,7 +1,6 @@
-package main
+package sorting
 
 import (
-	"fmt"
 	"reflect"
 	"sort"
 )
@@ -44,7 +43,7 @@ func SortStructs(slice interface{}, lessFunc func(i, j int) bool) {
 
 /**
  * -------------------------------------------------------------
- *
+ * implementation of quick sort
  * -------------------------------------------------------------
  */
 func Quicksort(slice []interface{}, comparator func(one, two interface{}) int) {

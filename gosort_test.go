@@ -1,4 +1,4 @@
-package main
+package sorting
 
 import (
 	"strconv"
@@ -28,21 +28,20 @@ func byNumber(one, two interface{}) int {
 }
 
 func Test(t *testing.T) {
-	toSort := make([]Order, 12)
+	orders := make([]Order, 12)
 
 	for i := range initial {
-		toSort[i] = Order{initial[i]}
+		orders[i] = Order{initial[i]}
 	}
 
-	lessFunc := func(i, j int) bool {
-		return toSort[i].number < toSort[j].number
-	}
-	SortStructs(toSort, lessFunc)
+	SortStructs(orders, func(i, j int) bool {
+		return orders[i].number < orders[j].number
+	})
 
-	for i := range toSort {
+	for i := range orders {
 		if i > 0 {
-			if byNumber(toSort[i-1], toSort[i]) == 1 {
-				t.Errorf("Wrong sort, %v is bigger than %v", toSort[i-1], toSort[i])
+			if byNumber(orders[i-1], orders[i]) == 1 {
+				t.Errorf("Wrong sort, %v is bigger than %v", orders[i-1], orders[i])
 			}
 		}
 
