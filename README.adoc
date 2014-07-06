@@ -1,5 +1,7 @@
-= Usage
+= Sort functions
+Sorting slice of structs using closure comparator. Uses reflection, therefore slow.
 
+== Usage
 --------------------------------------
 SortStructs(orders, func(i, j int) bool {
 	return orders[i].number < orders[j].number
