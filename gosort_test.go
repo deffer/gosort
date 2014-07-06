@@ -28,13 +28,16 @@ func byNumber(one, two interface{}) int {
 }
 
 func Test(t *testing.T) {
-	toSort := make([]interface{}, 12)
+	toSort := make([]Order, 12)
 
 	for i := range initial {
 		toSort[i] = Order{initial[i]}
 	}
 
-	sorti(toSort, byNumber)
+	lessFunc := func(i, j int) bool {
+		return toSort[i].number < toSort[j].number
+	}
+	SortStructs(toSort, lessFunc)
 
 	for i := range toSort {
 		if i > 0 {
